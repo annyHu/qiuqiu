@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="lib/bootstrap-3.3.0/bootstrap.css">
+	<style>
+	*{
+		margin:0;
+		padding:0;
+	}
+	/*container start*/
+	.container{
+		background: #666;
+	}
+	.box{
+		position: relative;
+		text-align: center;
+		font-family:'Source Sans Pro', 'Arial', 'sans-serif';
+		color:rgba(255,255,255,.7);
+		
+	}
+	.box strong{
+		display: block;
+		font-size: 30px;
+	}
+	.box>span{
+		position: absolute;
+		display: inline-block;
+		line-height: 40px;
+		width: 180px;
+		top:50%;
+		margin-top: -50px;
+		font-size: 24px;
+
+	}
+/*container end*/
+	</style>
+</head>
+<body>
+<!-- 掌握的技能 -->
+<div class="container">
+	<div class="row">
+		<div class="col-md-2 col-sm-4 col-xs-6 box">
+			<span>
+				<strong>HTML5</strong>
+				<span class="degree">90%</span>
+			</span>
+			<canvas height="220" width="220" class="canvas">
+				你的浏览器不支持canvas！
+			</canvas>
+		</div>
+		<div class="col-md-2 col-sm-4 col-xs-6 box">
+			<span>
+				<strong>CSS3</strong>
+				<span class="degree">90%</span>
+			</span>
+			<canvas height="220" width="220" class="canvas">
+				你的浏览器不支持canvas！
+			</canvas>
+		</div>
+		<div class="col-md-2 col-sm-4 col-xs-6 box">
+			<span>
+				<strong>js</strong>
+				<span class="degree">85%</span>
+			</span>
+			<canvas height="220" width="220" class="canvas">
+				你的浏览器不支持canvas！
+			</canvas>
+		</div>
+		<div class="col-md-2 col-sm-4 col-xs-6 box">
+			<span>
+				<strong>jQuery</strong>
+				<span class="degree">90%</span>
+			</span>
+			<canvas height="220" width="220" class="canvas">
+				你的浏览器不支持canvas！
+			</canvas>
+		</div>
+		<div class="col-md-2 col-sm-4 col-xs-6 box">
+			<span>
+				<strong>bootstrap</strong>
+				<span class="degree">80%</span>
+			</span>
+			<canvas height="220" width="220" class="canvas">
+				你的浏览器不支持canvas！
+			</canvas>
+		</div>
+		<div class="col-md-2 col-sm-4 col-xs-6 box">
+			<span>
+				<strong>nodejs</strong>
+				<span class="degree">70%</span>
+			</span>
+			<canvas height="220" width="220" class="canvas">
+				你的浏览器不支持canvas！
+			</canvas>
+		</div>
+	</div>
+	
+	
+</div>
+	
+	<script>
+		var canvas=document.querySelectorAll('.canvas');
+		var degree=document.querySelectorAll('.degree');
+		canvas.forEach(function(elem,i){
+			var num=degree[i].innerHTML;
+			num=parseInt(num)/100;
+			var ctx=elem.getContext('2d');
+			ctx.lineWidth='10';
+			//背景圆圈
+			ctx.arc(90,90,80,0,2*Math.PI);
+			ctx.strokeStyle='rgba(0,0,0,0.5)';
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.arc(90,90,80,0,2*Math.PI*num);
+			ctx.strokeStyle='#c2c';
+			ctx.stroke();
+		})
+	</script>
+</body>
+</html>

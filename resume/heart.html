@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="lib/jquery-2.2.3.js"></script>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		html,body{
+			height: 100%;
+			width:100%;
+			overflow: hidden;
+		}
+		.heart{
+			position: relative;
+			height: 100%;
+			width:100%;
+			left:-100%;
+			top: 0;
+		}
+		.heart div{
+			position: absolute;
+			height: 100%;
+			width:100%;
+			line-height: 400px;
+			font-size: 50px;
+			color:#fff;
+		}
+		.little-heart{
+			position: absolute;
+			right: 20px;
+			bottom: 50px;
+		}
+		.little-heart div{
+			background: #F18;
+			position: absolute;
+		}
+		.little-heart .active{
+			background: orange;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="heart"></div>
+	<div class="little-heart"></div>
+	<script>
+		var $heart=$('.heart');
+		var $litHeart=$('.little-heart')
+		var data=[
+			[0,1,1,0,0,0,1,1,0],
+			[1,1,1,1,0,1,1,1,1],
+			[1,1,1,1,1,1,1,1,1],
+			[1,1,1,1,1,1,1,1,1],
+			[1,1,1,1,1,1,1,1,1],
+			[0,1,1,1,1,1,1,1,0],
+			[0,0,1,1,1,1,1,0,0],
+			[0,0,0,1,1,1,0,0,0],
+			[0,0,0,0,1,0,0,0,0]
+		];
+		var colors = [
+			'images/lv1.jpg',
+			'images/lv2.jpg',
+			'images/lv3.jpg',
+			'images/lv4.jpg',
+			'images/lv5.jpg',
+			'images/lv4.jpg'
+		];
+		// 生成大心心
+		var str='';
+		for(var i=0;i<data.length;i++){
+			for(var j=0;j<data[i].length;j++){
+				if(data[i][j]===1){
+					str+='<div style="left:'+j*100+'%;top:'+i*100+'%;background:url('+colors[parseInt(Math.random()*colors.length)]+') no-repeat;background-size:100%;">行'+i+'列'+j+'</div>';
+				}	
+			}
+		}
+		// 生成小心心
+		var litstr='';
+		var width=28;
+		var height=20;
+		var space=5;
+		for(var i=0;i<data.length;i++){
+			for(var j=0;j<data[i].length;j++){
+				if(data[i][j]===1){
+					litstr+='<div data-row="'+i+'" data-col="'+j+'" style="left:'+j*(width+space)+'px;top:'+i*(height+space)+'px;width:'+width+'px;height:'+height+'px;"></div>'
+				}
+			}
+		}
+
+		$litHeart.css('width',j*(width+space)+'px');
+		$litHeart.css('height',i*(height+space)+'px');
+
+		$heart.html(str);
+		$litHeart.html(litstr);
+
+		var $btns=$litHeart.find('div');
+		//初始位置
+		var iNow=0;
+		var jNow=1;
+		$btns.eq(0).addClass('active');
+		//点击事件
+		$btns.click(function(){
+			var $this=$(this);
+			var row=$this.attr('data-row');
+			var col=$this.attr('data-col');
+			//运动
+			moveTo(row,col)
+		})
+		// 键盘左右上下移动
+		$(document).keydown(function(ev){
+			var i=iNow;
+			var j=jNow;
+			if(ev.keyCode==37){//向左
+				while(true){
+					j--;
+
+					if(j===-1){
+						i--;
+						j=9;
+						continue;
+					}
+					if(i===-1){
+						i=8;
+					}
+					if(data[i][j]===1){
+						moveTo(i, j);
+						break;
+					}
+
+				}
+			}
+			if(ev.keyCode==38){//向上
+				while(true){
+					i--;
+					if(i===-1){
+						j--;
+						i=9;
+						continue;
+					}
+					if(j===-1){
+						j=9;
+					}
+					if(data[i][j]===1){
+						moveTo(i, j);
+						break;
+					}
+
+				}
+			}
+			if(ev.keyCode==39){//向右
+				while(true){
+					j++;
+					if(j===9){
+						i++;
+						j=-1;
+						continue;
+					}
+					if(i===9){
+						i=-1;
+					}
+					if(data[i][j]===1){
+						moveTo(i, j);
+						break;
+					}
+
+				}
+				
+				
+			}
+			if(ev.keyCode==40){//向下
+				while(true){
+					i++;
+					if(i===9){
+						j++;
+						i=-1;
+						continue;
+					}
+					if(j===9){
+						j=0;
+					}
+					if(data[i][j]===1){
+						moveTo(i, j);
+						break;
+					}
+
+				}
+			}
+			
+		})
+		//运动函数
+		function moveTo(i,j){
+			$heart.stop().animate({
+				left:-j*100+'%',
+				top:-i*100+'%'
+			})
+			$btns.removeClass('active')
+			$litHeart.find('[data-row='+i+'][data-col='+j+']').addClass('active');
+			iNow=i;
+			jNow=j;
+		}
+
+
+	</script>
+</body>
+</html>

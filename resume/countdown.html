@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin:0px;
+			padding:0px;
+		}
+		div{
+			width:300px;
+			height:300px;
+			border:1px solid #fcc;
+			line-height: 30px;
+			margin:5px;
+			text-align: center;
+			float: left;
+		}
+		input{
+			width:240px;
+			height:25px;
+			border:1px solid #fcc;
+		}
+		p{
+			font-size: 16px;
+			color:#daa;
+			font-weight: bold;
+		}
+		span{
+			color: #c1f;
+		};
+		img{
+			width:200px;
+		}
+	</style>
+</head>
+<body>
+<div>
+	<input type="text" placeholder="为空或按格式输入：2017-2-12 15:00:00">
+	<button>确定</button>
+	<p>剩余	<span>0</span>天<span>0</span>小时<span>0</span>分<span>0</span>秒</p>
+	<img src="images/a1.png" alt="" width="100%" height="100%">
+</div>
+<div>
+	<input type="text" placeholder="为空或按格式输入:2017-2-12 15:00:00">
+	<button>确定</button>
+	<p>剩余	<span>0</span>天<span>0</span>小时<span>0</span>分<span>0</span>秒</p>
+	<img src="images/a1.png" alt="" width="100%" height="100%">
+</div>
+<div>
+	<input type="text" placeholder="为空或按格式输入:2017-2-12 15:00:00">
+	<button>确定</button>
+	<p>剩余	<span>0</span>天<span>0</span>小时<span>0</span>分<span>0</span>秒</p>
+	<img src="images/a1.png" alt="" width="100%" height="100%">
+</div>
+<div>
+	<input type="text" placeholder="为空或按格式输入:2017-2-12 15:00:00">
+	<button>确定</button>
+	<p>剩余	<span>0</span>天<span>0</span>小时<span>0</span>分<span>0</span>秒</p>
+	<img src="images/a1.png" alt="" width="100%" height="100%">
+</div>
+	<script>
+
+		
+		function newtime(obj){			
+			var oBtn=obj.getElementsByTagName('button');
+			var inp=obj.querySelectorAll('input');
+			var span=obj.getElementsByTagName('span');
+			var img=obj.getElementsByTagName('img');
+			inp.forEach(function(elem,i){
+				var clock=false;
+				oBtn[i].onclick = function(){
+					var timeStr=elem.value;
+					var now=new Date();
+					if(timeStr===''){
+						timeStr=now-10+32000;
+					}
+					var targetTime = new Date(timeStr);
+					if(!clock){
+						var timer=setInterval(function(){
+							
+							now=new Date();
+							var total=targetTime-now;
+							console.log(total)
+							if(total<0){
+								alert('商品已经过期')
+								clearInterval(timer);
+								img[i].src="images/a2.png";
+								clock=false;//当定时器运行完后，才可以重新开启；
+								return;
+							};
+							img[i].src="images/a1.png";
+							var secs=parseInt(total/1000);
+							var date=parseInt(secs/(60*60*24));
+							var hours=parseInt((secs%(60*60*24))/(60*60));
+							var mins=parseInt(secs%(60*60)/60);
+							var seconds=parseInt(secs%60);
+							span[0].innerHTML=date;
+							span[1].innerHTML=hours;
+							span[2].innerHTML=mins;
+							span[3].innerHTML=seconds;
+							clock=true;
+						
+						},1000);
+
+					}
+					// else{
+					// 	//当定时器在运行后，不能在开启定时器；
+					// 	clearInterval(timer)
+					// }
+					
+				}
+			})		
+		}
+		var odiv=document.getElementsByTagName('div');
+		for(var i=0;i<odiv.length;i++){
+			newtime(odiv[i]);
+		}
+		
+	</script>
+</body>
+</html>

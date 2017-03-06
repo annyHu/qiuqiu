@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	*{
+		margin:0;
+		padding:0;
+	}
+	html,body{
+		height: 100%;
+		overflow: hidden;
+	}
+	body{
+		background: url(../images/1.jpg);
+		background-size: 100% 100%;
+	}
+	.container{
+		height: 100%;
+		width: 80%;
+		position: absolute;
+		top:0;
+		transition: 1s;
+		left:10%;
+		opacity: 0.7;
+	}
+	.page{
+		height: 100%;
+		width: 100%;
+		background: #c2c;
+		font-size: 200px;
+		text-align: center;
+		border: 1px solid #fff;
+	}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="page page1">1</div>
+		<div class="page page2">2</div>
+		<div class="page page3">3</div>
+		<div class="page page4">4</div>
+	</div>
+	<script>
+		var container=document.querySelector('.container');
+		var iNow=0;
+		var clock=false;
+		function onmousewheel(ev){
+			if(clock){
+				return;
+			}
+			clock=true;
+			if(ev.wheelDelta>0&&ev.wheelDelta ||ev.detail<0){
+				
+				iNow--;
+				if(iNow==-1){
+					
+					iNow=0;
+					clock=false;
+				}
+			}else{
+				iNow++;
+				if(iNow==4){					
+					iNow=3;
+					clock=false;
+				}
+			};
+
+			container.style.top=-iNow+'00%';
+
+		}
+		window.addEventListener('mousewheel',onmousewheel,false)
+		window.addEventListener('DOMMouseScroll',onmousewheel,false)
+		window.addEventListener('transitionend',function(){
+			clock=false;
+		},false)
+	</script>
+</body>
+</html>

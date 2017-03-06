@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="lib/jquery-2.2.3.js"></script>
+	<style>
+		.box{
+			width:300px;
+			height: 300px;
+			background: #c1c;
+			margin:50px auto;
+		}
+	</style>
+</head>
+<body>
+	<div class="box"></div>
+
+	<script type="text/javascript">
+		var $box=$('.box')
+		var decoration='';
+		$box.mouseenter(function(ev){
+			var $this=$(this)
+			var offset=$this.offset();//获取div在页面的坐标
+			var H=$this.innerHeight();//获取当前div的高
+			var W=$this.innerWidth();//获取当前div的宽
+
+			var center={//获取当前div的宽中心点的位置
+				x:offset.left+W/2,
+				y:offset.top+H/2
+			}
+			mouse={//获取鼠标进入时的坐标
+				x:ev.clientX,
+				y:ev.clientY
+			}
+			var angle=Math.atan(H/W);//获取参照角度，得到的值是弧度
+			angle=angle*(180/(Math.PI))//换算成角度
+			var mouseAngle=Math.atan((mouse.y-center.y)/(mouse.x-center.x));//鼠标进入位置的角度，以X轴为水平参照线，鼠标与中心点连线与水平轴的夹角
+			mouseAngle=mouseAngle*(180/Math.PI)//换算成角度
+			mouseAngle=Math.abs(mouseAngle)//因为有正负，这里取绝对值
+			console.log(mouseAngle)
+			if(mouse.x<center.x && mouse.y<center.y){//判断进入的位置分为4个区域，以中心的水平，垂直线，
+				if(mouseAngle>angle){//判断角度。得出进入方向
+					decoration='top'
+				}else{
+					decoration='left'
+				}
+				
+			}else if(mouse.x>center.x && mouse.y<center.y){
+				if(mouseAngle>angle){
+					decoration='top'
+				}else{
+					decoration='right'
+				}
+			}
+			else if(mouse.x>center.x && mouse.y>center.y){
+				if(mouseAngle>angle){
+					decoration='bottom'
+				}else{
+					decoration='right'
+				}
+			}
+			else if(mouse.x<center.x && mouse.y>center.y){
+				if(mouseAngle>angle){
+					decoration='bottom'
+				}else{
+					decoration='left'
+				}
+			}
+			console.log(decoration)
+
+		})
+		
+	</script>
+</body>
+</html>
